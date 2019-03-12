@@ -48,6 +48,9 @@ class Render(object):
         #ctx.tmpl.update(engine=engine)
 
     def bgp_neighbors(self, data, fobj, validate=True):
+        if validate:
+            validate(BgpNeighbor(), data)
+
         filename = "bgp/neighbors.j2"
         return self._render(filename, data, fobj)
 
@@ -61,6 +64,7 @@ class Render(object):
 
 
 def validate(model, data, strict=True):
+    schema.apply_defaults(model, data)
     success, errors, warnings = schema.validate(model, data, log=print)
     # TODO make this throw actual errors, etc
     if errors:

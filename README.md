@@ -1,5 +1,7 @@
 
-# netom[![PyPI](https://img.shields.io/pypi/v/netom.svg?maxAge=3600)](https://pypi.python.org/pypi/netom)
+# netom
+
+[![PyPI](https://img.shields.io/pypi/v/netom.svg?maxAge=3600)](https://pypi.python.org/pypi/netom)
 [![PyPI](https://img.shields.io/pypi/pyversions/netom.svg?maxAge=3600)](https://pypi.python.org/pypi/netom)
 [![Travis CI](https://img.shields.io/travis/20c/netom.svg?maxAge=3600)](https://travis-ci.org/20c/netom)
 [![Code Health](https://landscape.io/github/20c/netom/master/landscape.svg?style=flat)](https://landscape.io/github/20c/netom/master)
