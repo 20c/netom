@@ -1,0 +1,5 @@
+include LICENSE
+recursive-include Ctl *.txt
+include Ctl/VERSION
+recursive-include src/netom *.py
+recursive-include src/netom/templates *.j2

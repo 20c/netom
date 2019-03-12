@@ -1,0 +1,27 @@
+
+global:
+  config:
+    as: 63311
+    router_id: 10.1.1.1
+
+peer-groups:
+- name: ixpeers
+  config:
+
+policy:
+- name: ixpeers
+  next_hop: SELF
+  med: 100
+  local_pref: 200
+  # route_origin:
+
+neighbors:
+- neighbor_address: 10.1.1.2
+  peer_as: 12345
+  peer_group: ixpeers
+  auth_password: s3cr3t
+  local_address:
+  local_as: 63311
+  enabled: True
+  import_policy:
+  export_policy:

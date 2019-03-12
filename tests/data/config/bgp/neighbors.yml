@@ -1,0 +1,24 @@
+neighbors:
+- neighbor_address: 10.1.1.2
+  name: as12345 ASTRANS
+  description: as12345 port 2
+  peer_as: 12345
+  peer_group: ixpeers
+  max_prefixes: 255
+  auth_password: s3cr3t
+#  local_address:
+#  local_as: 63311
+  enabled: True
+  import_policy: peer-in
+  export_policy: peer-out
+- neighbor_address: 10.1.1.3
+  name: as12346 ASTRANS plus 1
+  description: as12345 port 3
+  peer_as: 12345
+  peer_group: ixpeers
+  max_prefixes: 500
+#  local_address:
+#  local_as: 63311
+  enabled: True
+  import_policy: peer-in
+  export_policy: peer-out

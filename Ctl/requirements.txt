@@ -1,0 +1,14 @@
+certifi==2019.3.9
+cfu==1.0.0
+chardet==3.0.4
+click==7.0
+future==0.17.1
+idna==2.8
+jinja2==2.10
+markupsafe==1.1.1
+munge==0.6.0
+pyyaml==3.13
+requests==2.21.0
+six==1.12.0
+tmpl==0.3.0
+urllib3==1.24.1

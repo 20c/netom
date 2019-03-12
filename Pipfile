@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+tox = "*"
+codecov = "*"
+coverage = "*"
+pytest-cov = "*"
+
+[packages]
+cfu = "*"
+e1839a8 = {path = ".",editable = true}
+munge = "*"
+jinja2 = "*"
+tmpl = "*"
+
+[requires]
+python_version = "3.6"
