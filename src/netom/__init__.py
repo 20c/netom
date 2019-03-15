@@ -1,10 +1,11 @@
 
+import ipaddress
+import os
 from pkg_resources import get_distribution
 
 import confu
 from confu import schema
 import tmpl
-import os
 
 # TODO move out of this namespace
 from .models import BgpNeighbor
@@ -15,8 +16,18 @@ __version__ = get_distribution("netom").version
 
 
 def make_variable_name(value):
-    value = value.translate(str.maketrans(" .", "__"))
+    """
+    Makes passed value into a variable name.
+    """
+    value = str(value).translate(str.maketrans(" .:", "___"))
     return value
+
+
+def ip_version(value):
+    """
+    Returns version of passed IP address.
+    """
+    return ipaddress.ip_address(value).version
 
 
 class Render(object):
@@ -39,6 +50,7 @@ class Render(object):
         search_path = os.path.join(os.getcwd(), "src/netom/templates/", self.version, self.type) #, "bgp")
         self.engine = tmpl.get_engine("jinja2")(search_path=search_path)
         self.engine.engine.filters["make_variable_name"] = make_variable_name
+        self.engine.engine.filters["ip_version"] = ip_version
         # self.engine.search_path = os.path.dirname(search_path)
 
     def _render(self, filename, data, fobj):
@@ -48,25 +60,29 @@ class Render(object):
         #ctx.tmpl.update(engine=engine)
 
     def bgp_neighbors(self, data, fobj, validate=True):
-#        if validate:
-#            validate(BgpNeighbor(), data)
+        """
+        Renders BGP neighbors using `template/{{ typ }}/bgp/neighbors`.
+        """
+
+        groups = dict()
+        # collate by group
+        for each in data["neighbors"]:
+            if validate:
+                validate_data(BgpNeighbor(), each)
+            groups.setdefault(each["peer_group"], []).append(each)
+
+        groups = dict(peer_groups=groups)
 
         filename = "bgp/neighbors.j2"
-        return self._render(filename, data, fobj)
-
-    def bgp_neighbor(self, data, fobj, validate=True):
-        """
-        Renders a single BGP neighbor using `template/{{ typ }}/bgp/neighbors`.
-        """
-
-        if validate:
-            success, errors, warnings = validate(BgpNeighbor(), data)
+        return self._render(filename, groups, fobj)
 
 
-def validate(model, data, strict=True):
+def validate_data(model, data, strict=True):
     schema.apply_defaults(model, data)
     success, errors, warnings = schema.validate(model, data, log=print)
     # TODO make this throw actual errors, etc
+    return True
+
     if errors:
         raise NetomValidationError("validation has errors")
 

@@ -32,6 +32,12 @@ Rendering:
 pipenv run netom render bgp_neighbors netom0 bird1-0 tests/data/config/bgp/neighbors.yml
 ```
 
+### Template filters
+
+`make_variable_name`: Makes value into a name safe to use as a variable name. Changes spaces, punctuation, etc into `_`
+
+`ip_version`: returns IP version of passed value (returns either 4 or 6).
+
 
 ### License
 

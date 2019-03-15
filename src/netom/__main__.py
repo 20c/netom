@@ -33,14 +33,9 @@ def main(argv=None):
 
     render = netom.Render(model_version, model_type)
     data = munge.load_datafile(argd["data_file"])
-    groups = dict()
-    # collate by group
-    for each in data["neighbors"]:
-        groups.setdefault(each["peer_group"], []).append(each)
 
-    groups = dict(peer_groups=groups)
     with io.StringIO() as fobj:
-        getattr(render, render_call)(groups, fobj)
+        getattr(render, render_call)(data, fobj)
         print("---")
         print(fobj.getvalue())
 

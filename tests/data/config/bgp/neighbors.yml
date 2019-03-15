@@ -22,3 +22,14 @@ neighbors:
   enabled: True
   import_policy: peer-in
   export_policy: peer-out
+- neighbor_address: 2001:DB8::1
+  name: as12345 ipv6
+  description: as12345 ipv6 port 3
+  peer_as: 12345
+  peer_group: ixpeers
+  max_prefixes: 500
+#  local_address:
+#  local_as: 63311
+  enabled: True
+  import_policy: peer-in
+  export_policy: peer-out
