@@ -13,8 +13,11 @@ Network object models
 
 ### Development
 
+Start with a virtual environment, and then:
+
 Install:
 ```sh
+pip install pipenv
 pipenv --python=`which python3.6` install --dev
 ```
 
