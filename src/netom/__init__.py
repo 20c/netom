@@ -48,8 +48,8 @@ class Render(object):
         #ctx.tmpl.update(engine=engine)
 
     def bgp_neighbors(self, data, fobj, validate=True):
-        if validate:
-            validate(BgpNeighbor(), data)
+#        if validate:
+#            validate(BgpNeighbor(), data)
 
         filename = "bgp/neighbors.j2"
         return self._render(filename, data, fobj)
