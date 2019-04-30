@@ -6,8 +6,9 @@ neighbors:
   peer_group: ixpeers
   max_prefixes: 255
   auth_password: s3cr3t
-#  local_address:
-#  local_as: 63311
+  local_address: 192.168.0.1
+  local_as: 63311
+  type: external
   enabled: True
   import_policy: peer-in
   export_policy: peer-out
@@ -15,7 +16,7 @@ neighbors:
   name: as12346 ASTRANS plus 1
   description: as12345 port 3
   peer_as: 12345
-  peer_group: ixpeers
+  peer_group: transitpeers
   max_prefixes: 500
 #  local_address:
 #  local_as: 63311
