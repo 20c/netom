@@ -9,7 +9,7 @@ neighbors:
   local_address: 192.168.0.1
   local_as: 63311
   type: external
-  enabled: True
+  enabled: False
   import_policy: peer-in
   export_policy: peer-out
 - neighbor_address: 10.1.1.3
