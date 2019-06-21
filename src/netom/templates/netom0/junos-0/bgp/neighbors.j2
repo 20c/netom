@@ -1,11 +1,16 @@
+{% set printed_localas = false %}
 {% for name, group in peer_groups.items() %}
 group {{ name }} {
+    type {{ peer_type }};
 {%  for peer in group %}
 {% if peer.local_address %}
     local-address {{ peer.local_address }};
 {% endif %}
-{% if peer.local_as %}
+{% if printed_localas == false %}
+{%  if peer.local_as %}
     local-as {{ peer.local_as }};
+{% set printed_localas = true %}
+{%  endif %}
 {% endif %}
 {% if peer.enabled == False %}
     inactive: neighbor {{ peer.neighbor_address }} {
