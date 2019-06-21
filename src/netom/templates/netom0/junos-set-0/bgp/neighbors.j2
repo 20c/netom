@@ -1,7 +1,11 @@
 {% set printed_localas = { 'flag': false } %}
+{% set printed_type = { 'flag': false } %}
 {% for name, group in peer_groups.items() %}
 {%  for peer in group %}
+{% if printed_type.flag == false %}
 set protocols bgp group {{ peer.peer_group }} type {{ peer.peer_type }}
+{% if printed_type.update({ 'flag': true }) %}{% endif %}
+{%  endif %}
 {% if peer.local_as %}
 {%  if printed_localas.flag == false %}
 set protocols bgp group {{ peer.peer_group }} local-as {{ peer.local_as }}
