@@ -1,4 +1,4 @@
-{% set printed_localas = false %}
+{% set printed_localas = { 'flag': false } %}
 {% for name, group in peer_groups.items() %}
 group {{ name }} {
     type {{ peer_type }};
@@ -6,10 +6,10 @@ group {{ name }} {
 {% if peer.local_address %}
     local-address {{ peer.local_address }};
 {% endif %}
-{% if printed_localas == false %}
+{% if printed_localas.flag == false %}
 {%  if peer.local_as %}
     local-as {{ peer.local_as }};
-{% set printed_localas = true %}
+{% if printed_localas.update({ 'flag': true }) %}{% endif %}
 {%  endif %}
 {% endif %}
 {% if peer.enabled == False %}
