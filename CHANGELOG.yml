@@ -1,0 +1,11 @@
+Unreleased:
+  added:
+    - python to 3.9
+  changed:
+    - switch to poetry
+  deprecated: []
+  fixed: []
+  removed:
+    - python 3.4 and 3.5 support
+    - Pipfile
+  security: []
