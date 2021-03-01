@@ -7,7 +7,7 @@ idna==2.8
 jinja2==2.10
 markupsafe==1.1.1
 munge==0.6.0
-pyyaml==3.13
+pyyaml==5.1
 requests==2.21.0
 six==1.12.0
 tmpl==0.3.0
