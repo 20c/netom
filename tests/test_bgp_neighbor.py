@@ -1,15 +1,13 @@
-
-from confu.schema import validate
 import pytest
+from confu.schema import validate
 
 import netom
 from netom import exception
 from netom.models import BgpNeighbor
 
-
 INVALID0 = dict(
     neighbor_address="not an ip",
-    )
+)
 
 
 VALID0 = dict(
@@ -22,7 +20,7 @@ VALID0 = dict(
     enabled=True,
     import_policy="peer-in",
     export_policy="peer-out",
-    )
+)
 
 
 # FIXME

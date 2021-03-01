@@ -1,4 +1,3 @@
-
 import argparse
 import io
 import sys
@@ -7,13 +6,17 @@ import munge
 
 import netom
 
+
 def main(argv=None):
     if argv is None:
         argv = sys.argv[1:]
 
     parser = argparse.ArgumentParser(description="netom")
-    parser.add_argument("--version", action="version",
-                        version="{}s version {}".format("%(prog)", netom.__version__))
+    parser.add_argument(
+        "--version",
+        action="version",
+        version="{}s version {}".format("%(prog)", netom.__version__),
+    )
     # parser.add_argument("--output-format", help="output format (yaml, json, text)")
 
     parser.add_argument("command")
