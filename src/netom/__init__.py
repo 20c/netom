@@ -77,7 +77,7 @@ class Render(object):
         return self._render(filename, groups, fobj)
 
 
-def validate_data(model, data, strict=True):
+def validate(model, data, strict=True):
     schema.apply_defaults(model, data)
     success, errors, warnings = schema.validate(model, data, log=print)
     # TODO make this throw actual errors, etc
