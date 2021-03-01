@@ -3,10 +3,8 @@
 
 [![PyPI](https://img.shields.io/pypi/v/netom.svg?maxAge=3600)](https://pypi.python.org/pypi/netom)
 [![PyPI](https://img.shields.io/pypi/pyversions/netom.svg?maxAge=3600)](https://pypi.python.org/pypi/netom)
-[![Travis CI](https://img.shields.io/travis/20c/netom.svg?maxAge=3600)](https://travis-ci.org/20c/netom)
-[![Code Health](https://landscape.io/github/20c/netom/master/landscape.svg?style=flat)](https://landscape.io/github/20c/netom/master)
+[![Tests](https://github.com/20c/netom/workflows/tests/badge.svg)](https://github.com/20c/netom)
 [![Codecov](https://img.shields.io/codecov/c/github/20c/netom/master.svg?maxAge=3600)](https://codecov.io/github/20c/netom)
-[![Requires.io](https://img.shields.io/requires/github/20c/netom.svg?maxAge=3600)](https://requires.io/github/20c/netom/requirements)
 
 Network object models
 
