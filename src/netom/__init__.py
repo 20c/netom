@@ -69,7 +69,7 @@ class Render:
         # collate by group
         for each in data["neighbors"]:
             if validate:
-                validate_data(BgpNeighbor(), each)
+                validate(BgpNeighbor(), each)
             groups.setdefault(each["peer_group"], []).append(each)
 
         groups = dict(peer_groups=groups)

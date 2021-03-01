@@ -1,7 +1,5 @@
-import pytest
-
 import netom
 
 
 def test_init():
-    pass
+    assert netom.Render("test", "12")

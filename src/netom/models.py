@@ -1,4 +1,3 @@
-import confu
 from confu import schema
 
 

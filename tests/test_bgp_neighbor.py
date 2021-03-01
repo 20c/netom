@@ -1,5 +1,4 @@
 import pytest
-from confu.schema import validate
 
 import netom
 from netom import exception

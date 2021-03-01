@@ -34,6 +34,9 @@ def main(argv=None):
     model_version = argd["model_version"]
     model_type = argd["model_type"]
 
+    if command != "render":
+        raise Exception("only render is supported")
+
     render = netom.Render(model_version, model_type)
     data = munge.load_datafile(argd["data_file"])
 
