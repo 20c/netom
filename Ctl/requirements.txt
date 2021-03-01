@@ -11,4 +11,4 @@ pyyaml==3.13
 requests==2.21.0
 six==1.12.0
 tmpl==0.3.0
-urllib3==1.24.1
+urllib3==1.24.2
