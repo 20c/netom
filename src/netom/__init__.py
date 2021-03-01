@@ -1,16 +1,15 @@
-
 import ipaddress
 import os
-from pkg_resources import get_distribution
 
 import confu
-from confu import schema
 import tmpl
+from confu import schema
+from pkg_resources import get_distribution
+
+from .exception import NetomValidationError
 
 # TODO move out of this namespace
 from .models import BgpNeighbor
-from .exception import NetomValidationError
-
 
 __version__ = get_distribution("netom").version
 
@@ -30,7 +29,7 @@ def ip_version(value):
     return ipaddress.ip_address(value).version
 
 
-class Render(object):
+class Render:
     """
     Renders data to defined type.
     """
@@ -47,17 +46,19 @@ class Render(object):
         self.type = model_type
 
         # FIXME use pkg resources
-        search_path = os.path.join(os.getcwd(), "src/netom/templates/", self.version, self.type) #, "bgp")
+        search_path = os.path.join(
+            os.getcwd(), "src/netom/templates/", self.version, self.type
+        )  # , "bgp")
         self.engine = tmpl.get_engine("jinja2")(search_path=search_path)
         self.engine.engine.filters["make_variable_name"] = make_variable_name
         self.engine.engine.filters["ip_version"] = ip_version
         # self.engine.search_path = os.path.dirname(search_path)
 
     def _render(self, filename, data, fobj):
-        #engine.engine.undefined = IgnoreUndefined
+        # engine.engine.undefined = IgnoreUndefined
         output = self.engine._render(src=filename, env=data)
         fobj.write(output)
-        #ctx.tmpl.update(engine=engine)
+        # ctx.tmpl.update(engine=engine)
 
     def bgp_neighbors(self, data, fobj, validate=True):
         """
@@ -68,7 +69,7 @@ class Render(object):
         # collate by group
         for each in data["neighbors"]:
             if validate:
-                validate_data(BgpNeighbor(), each)
+                validate(BgpNeighbor(), each)
             groups.setdefault(each["peer_group"], []).append(each)
 
         groups = dict(peer_groups=groups)
