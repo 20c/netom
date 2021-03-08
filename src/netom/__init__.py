@@ -1,3 +1,4 @@
+import io
 import ipaddress
 import os
 
@@ -34,7 +35,7 @@ class Render:
     Renders data to defined type.
     """
 
-    def __init__(self, model_version, model_type):
+    def __init__(self, model_version, model_type, search_path=None):
         """
         Create a render object.
 
@@ -45,10 +46,14 @@ class Render:
         self.version = model_version
         self.type = model_type
 
-        # FIXME use pkg resources
-        search_path = os.path.join(
-            os.getcwd(), "src/netom/templates/", self.version, self.type
-        )  # , "bgp")
+        if not search_path:
+            # FIXME use pkg resources
+            search_path = os.path.join(
+                os.getcwd(), "src/netom/templates/", self.version, self.type
+            )  # , "bgp")
+        self.set_search_path(search_path)
+
+    def set_search_path(self, search_path):
         self.engine = tmpl.get_engine("jinja2")(search_path=search_path)
         self.engine.engine.filters["make_variable_name"] = make_variable_name
         self.engine.engine.filters["ip_version"] = ip_version
@@ -59,6 +64,11 @@ class Render:
         output = self.engine._render(src=filename, env=data)
         fobj.write(output)
         # ctx.tmpl.update(engine=engine)
+
+    def render_string(self, filename, data):
+        with io.StringIO() as fobj:
+            self._render(filename, data, fobj)
+            return fobj.getvalue()
 
     def bgp_neighbors(self, data, fobj, validate=True):
         """

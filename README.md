@@ -11,23 +11,21 @@ Network object models
 
 ### Development
 
-Start with a virtual environment, and then:
+Install (poetry)[https://python-poetry.org/]
 
-Install:
 ```sh
-pip install pipenv
-pipenv --python=`which python3.6` install --dev
+poetry install
 ```
 
 Testing:
 ```sh
-pipenv run pytest -v -rxs --cov-report term-missing --cov=src/netom/ tests/
+poetry run pytest -v -rxs --cov-report term-missing --cov=src/netom/ tests/
 ```
 
 Rendering:
 
 ```sh
-pipenv run netom render bgp_neighbors netom0 bird1-0 tests/data/config/bgp/neighbors.yml
+poetry run netom render bgp_neighbors netom0 bird1-0 tests/data/config/bgp/neighbors.yml
 ```
 
 ### Template filters
@@ -39,7 +37,7 @@ pipenv run netom render bgp_neighbors netom0 bird1-0 tests/data/config/bgp/neigh
 
 ### License
 
-Copyright 2018-2019 20C, LLC
+Copyright 2018-2021 20C, LLC
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this softare except in compliance with the License.
