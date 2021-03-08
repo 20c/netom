@@ -1,11 +1,15 @@
+# Changelog
 
-# Change log for netom
 
-## [Unreleased]
+## Unreleased
+
+
+## 0.2.0
 ### Added
-### Fixed
+- python to 3.9
+- set_search_path()
 ### Changed
-### Deprecated
+- switch to poetry
 ### Removed
-### Security
-
+- python 3.4 and 3.5 support
+- Pipfile

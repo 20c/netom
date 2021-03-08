@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netom"
-version = "0.0.1"
+version = "0.2.0"
 description = "network object models"
 authors = ["20C <code@20c.com>"]
 readme = "README.md"

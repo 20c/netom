@@ -1,0 +1,16 @@
+0.2.0:
+  added:
+  - python to 3.9
+  - set_search_path()
+  changed:
+  - switch to poetry
+  removed:
+  - python 3.4 and 3.5 support
+  - Pipfile
+Unreleased:
+  added: []
+  changed: []
+  deprecated: []
+  fixed: []
+  removed: []
+  security: []
