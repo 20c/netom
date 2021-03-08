@@ -1,6 +1,7 @@
 Unreleased:
   added:
     - python to 3.9
+    - set_search_path()
   changed:
     - switch to poetry
   deprecated: []
