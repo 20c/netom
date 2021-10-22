@@ -30,9 +30,9 @@ netom = "netom.cli:main"
 
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 Jinja2 = "^2.10.1"
-tmpl = "^0.3.0"
+tmpl = "^1"
 confu = "^1.7.1"
 munge = "^1.1.0"
 
