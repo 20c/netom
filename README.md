@@ -5,6 +5,8 @@
 [![PyPI](https://img.shields.io/pypi/pyversions/netom.svg?maxAge=3600)](https://pypi.python.org/pypi/netom)
 [![Tests](https://github.com/20c/netom/workflows/tests/badge.svg)](https://github.com/20c/netom)
 [![Codecov](https://img.shields.io/codecov/c/github/20c/netom/master.svg?maxAge=3600)](https://codecov.io/github/20c/netom)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/20c/netom.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/20c/netom/context:python)
+
 
 Network object models
 
