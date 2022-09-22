@@ -15,7 +15,7 @@
 {% for name, group in peer_groups.items() %}
 {% for peer in group %}
 /configure router "Base" bgp neighbor "{{ peer.neighbor_address }}" { }
-{% if peer.enabled == False %} 
+{% if peer.enabled == False %}
 /configure router "Base" bgp neighbor "{{ peer.neighbor_address }}" admin-state disable
 {% else %}
 /configure router "Base" bgp neighbor "{{ peer.neighbor_address }}" admin-state enable
