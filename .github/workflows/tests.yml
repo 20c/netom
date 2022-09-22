@@ -31,11 +31,13 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Run tests
         run: |
+          python -m pip install --upgrade pip
+          pip install tox-gh-actions
           poetry run tox
           poetry run coverage report
       # upload coverage stats
       - name: Upload coverage
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
         with:
-          file: ./coverage.xml
+#          file: ./coverage.xml
           fail_ci_if_error: true
