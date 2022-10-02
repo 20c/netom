@@ -7,8 +7,8 @@ import tmpl
 from confu import schema
 from pkg_resources import get_distribution
 
-from .exception import NetomValidationError
 from . import filters
+from .exception import NetomValidationError
 
 # TODO move out of this namespace
 from .models import BgpNeighbor

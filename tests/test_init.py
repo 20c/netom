@@ -2,9 +2,7 @@ import os
 
 import netom
 
-filter_data = dict(
-    ip4="10.0.0.1/24"
-)
+filter_data = dict(ip4="10.0.0.1/24")
 
 
 def test_init():

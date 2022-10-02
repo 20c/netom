@@ -32,4 +32,3 @@ def ip_version(value):
     Returns version of passed IP address.
     """
     return ipaddress.ip_interface(value).version
-
