@@ -31,7 +31,7 @@ netom = "netom.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-Jinja2 = "^3"
+jinja2 = "^3"
 tmpl = "^1"
 confu = "^1.7.1"
 munge = "^1.1.0"
@@ -61,7 +61,6 @@ mkdocs = "^1.2.3"
 
 # ctl
 ctl = ">=1"
-jinja2 = ">=2"
 tmpl = ">=1"
 
 
