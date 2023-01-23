@@ -1,6 +1,34 @@
 import ipaddress
 
-__all__ = ["make_variable_name", "ip_address", "ip_interface", "ip_version"]
+__all__ = [
+    "make_variable_name",
+    "render_template",
+    "ip_address",
+    "ip_interface",
+    "ip_version",
+]
+
+from jinja2 import pass_context
+
+
+@pass_context
+def render_template(context, value):
+    """
+    Renders a template from the value.
+
+    Does not get local variables.
+    """
+    template = context.eval_ctx.environment.from_string(value)
+    #    print(f"parent {context.parent}")
+    #    print(f"ENV {context.get_all()['self_id']}")
+    #    print(f"self-id {context.get('self_id')}")
+    result = template.render(**context)
+
+    # not sure we need this
+    #    if context.eval_ctx.autoescape:
+    #        result = Markup(result)
+
+    return result
 
 
 def make_variable_name(value):
