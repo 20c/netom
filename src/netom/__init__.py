@@ -9,7 +9,7 @@ from pkg_resources import get_distribution
 
 from . import filters
 from .exception import NetomValidationError
-from .j2_filters import address_to_mask, address_to_wildcard
+from .j2_filters import address_to_mask, address_to_wildcard, line_to_mask, line_to_wildcard
 
 # TODO move out of this namespace
 from .models import BgpNeighbor
@@ -47,6 +47,8 @@ class Render:
         self.engine.engine.filters["ip_version"] = ip_version
         self.engine.engine.filters["address_to_mask"] = address_to_mask
         self.engine.engine.filters["address_to_wildcard"] = address_to_wildcard
+        self.engine.engine.filters["line_to_mask"] = line_to_mask
+        self.engine.engine.filters["line_to_wildcard"] = line_to_wildcard
         # self.engine.search_path = os.path.dirname(search_path)
 
         for name in filters.__all__:
