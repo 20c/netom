@@ -48,6 +48,7 @@ class Render:
         self.engine.engine.filters["address_to_wildcard"] = filters.address_to_wildcard
         self.engine.engine.filters["line_to_mask"] = filters.line_to_mask
         self.engine.engine.filters["line_to_wildcard"] = filters.line_to_wildcard
+        self.engine.engine.filters["ip_to_ipv4"] = filters.ip_to_ipv4
         # self.engine.search_path = os.path.dirname(search_path)
 
         for name in filters.__all__:

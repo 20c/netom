@@ -103,3 +103,10 @@ def line_to_wildcard(line):
     tokens = line.split()
     return " ".join([address_to_wildcard(token) if r_ip_nn.match(token) else token for token in tokens])
 
+def ip_to_ipv4(line):
+    """
+    Replace token "ip" with "ipv4" to satisfy IOS-XR syntax.
+    """
+    tokens = line.split()
+    return " ".join(["ipv4" if token == "ip" else token for token in tokens])
+
