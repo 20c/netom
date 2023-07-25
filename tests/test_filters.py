@@ -1,5 +1,5 @@
 
-from netom.j2_filters import address_to_mask, address_to_wildcard, line_to_mask, line_to_wildcard
+from netom.filters import address_to_mask, address_to_wildcard, line_to_mask, line_to_wildcard
 import pytest
 
 
