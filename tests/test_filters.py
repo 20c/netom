@@ -1,6 +1,5 @@
 
 from netom.filters import address_to_mask, address_to_wildcard, line_to_mask, line_to_wildcard
-import pytest
 
 
 def test_address_to_mask():

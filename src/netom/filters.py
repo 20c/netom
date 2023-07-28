@@ -7,11 +7,16 @@ from jinja2 import pass_context
 r_ip_nn = re.compile("[\d.]{7,15}/\d{1,2}")
 
 __all__ = [
-    "make_variable_name",
-    "render_template",
+    "address_to_mask",
+    "address_to_wildcard",
     "ip_address",
     "ip_interface",
+    "ip_to_ipv4",
     "ip_version",
+    "line_to_mask",
+    "line_to_wildcard",
+    "make_variable_name",
+    "render_template",
 ]
 
 

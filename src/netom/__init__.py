@@ -16,12 +16,43 @@ from .models import BgpNeighbor
 __version__ = get_distribution("netom").version
 
 
+from ansible.parsing.dataloader import DataLoader
+from ansible.template import Templar
+
+
+class NetomTemplar(Templar):
+    """A custom Templar class which includes additional jinja2 filters."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.environment.filters["address_to_mask"] = filters.address_to_mask
+
+        for name in filters.__all__:
+            self.environment.filters[name] = getattr(filters, name)
+
+
+class TemplarEngine:
+    """Engine for Ansible's Templar system for lazy vars."""
+
+    def __init__(self, *args, **kwargs):
+        # The DataLoader is used to load and parse YAML or JSON objects
+        # overload for search_path
+        self.dataloader = DataLoader()
+
+    def _render_str_to_str(self, instr, data):
+        # Instantiate Templar with the data loader and variable data
+        templar = NetomTemplar(loader=self.dataloader, variables=data)
+
+        # Use the templar object to render the template string
+        return templar.template(instr)
+
+
 class Render:
     """
     Renders data to defined type.
     """
 
-    def __init__(self, model_version, model_type, search_path=None):
+    def __init__(self, model_version, model_type, search_path=None, engine="jinja2"):
         """
         Create a render object.
 
@@ -32,6 +63,7 @@ class Render:
 
         self.version = model_version
         self.type = model_type
+        self._engine_type = engine
 
         if not search_path:
             # FIXME use pkg resources
@@ -41,18 +73,13 @@ class Render:
         self.set_search_path(search_path)
 
     def set_search_path(self, search_path):
-        self.engine = tmpl.get_engine("jinja2")(search_path=search_path)
-        self.engine.engine.filters["make_variable_name"] = filters.make_variable_name
-        self.engine.engine.filters["ip_version"] = filters.ip_version
-        self.engine.engine.filters["address_to_mask"] = filters.address_to_mask
-        self.engine.engine.filters["address_to_wildcard"] = filters.address_to_wildcard
-        self.engine.engine.filters["line_to_mask"] = filters.line_to_mask
-        self.engine.engine.filters["line_to_wildcard"] = filters.line_to_wildcard
-        self.engine.engine.filters["ip_to_ipv4"] = filters.ip_to_ipv4
-        # self.engine.search_path = os.path.dirname(search_path)
+        if self._engine_type == "templar":
+            self.engine = TemplarEngine()
+        else:
+            self.engine = tmpl.get_engine(self._engine_type)(search_path=search_path)
 
-        for name in filters.__all__:
-            self.engine.engine.filters[name] = getattr(filters, name)
+            for name in filters.__all__:
+                self.engine.engine.filters[name] = getattr(filters, name)
 
     def _render(self, filename, data, fobj):
         # engine.engine.undefined = IgnoreUndefined
@@ -64,6 +91,9 @@ class Render:
         with io.StringIO() as fobj:
             self._render(filename, data, fobj)
             return fobj.getvalue()
+
+    def render_from_string(self, instr, data):
+        return self.engine._render_str_to_str(instr, data)
 
     def bgp_neighbors(self, data, fobj, validate=True):
         """
@@ -81,6 +111,22 @@ class Render:
 
         filename = "bgp/neighbors.j2"
         return self._render(filename, groups, fobj)
+
+
+class TemplarRender(Render):
+
+    def __init__(self, *args, **kwargs):
+        kwargs["engine"] = "templar"
+        super().__init__(*args, **kwargs)
+
+    def render_string(self, filename, data):
+        with open(os.path.join(filename), 'r') as file:
+            template_string = file.read()
+            return self.render_from_string(template_string, data)
+
+    def render_from_string(self, instr, data):
+        return self.engine._render_str_to_str(instr, data)
+
 
 
 def validate(model, data, strict=True):
