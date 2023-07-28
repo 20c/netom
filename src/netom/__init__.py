@@ -7,27 +7,13 @@ import tmpl
 from confu import schema
 from pkg_resources import get_distribution
 
+from . import filters
 from .exception import NetomValidationError
 
 # TODO move out of this namespace
 from .models import BgpNeighbor
 
 __version__ = get_distribution("netom").version
-
-
-def make_variable_name(value):
-    """
-    Makes passed value into a variable name.
-    """
-    value = str(value).translate(str.maketrans(" .:", "___"))
-    return value
-
-
-def ip_version(value):
-    """
-    Returns version of passed IP address.
-    """
-    return ipaddress.ip_address(value).version
 
 
 class Render:
@@ -39,8 +25,9 @@ class Render:
         """
         Create a render object.
 
+        model_version is the data model version (currently at "netom0")
+
         subtype is typically vendor name
-        version is the model version to use
         """
 
         self.version = model_version
@@ -55,9 +42,17 @@ class Render:
 
     def set_search_path(self, search_path):
         self.engine = tmpl.get_engine("jinja2")(search_path=search_path)
-        self.engine.engine.filters["make_variable_name"] = make_variable_name
-        self.engine.engine.filters["ip_version"] = ip_version
+        self.engine.engine.filters["make_variable_name"] = filters.make_variable_name
+        self.engine.engine.filters["ip_version"] = filters.ip_version
+        self.engine.engine.filters["address_to_mask"] = filters.address_to_mask
+        self.engine.engine.filters["address_to_wildcard"] = filters.address_to_wildcard
+        self.engine.engine.filters["line_to_mask"] = filters.line_to_mask
+        self.engine.engine.filters["line_to_wildcard"] = filters.line_to_wildcard
+        self.engine.engine.filters["ip_to_ipv4"] = filters.ip_to_ipv4
         # self.engine.search_path = os.path.dirname(search_path)
+
+        for name in filters.__all__:
+            self.engine.engine.filters[name] = getattr(filters, name)
 
     def _render(self, filename, data, fobj):
         # engine.engine.undefined = IgnoreUndefined
