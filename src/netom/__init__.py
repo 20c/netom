@@ -31,18 +31,30 @@ class NetomTemplar(Templar):
             self.environment.filters[name] = getattr(filters, name)
 
 
+class PathLoader(DataLoader):
+    def __init__(self, search_path):
+        self._search_path = search_path
+        super().__init__()
+
+    def path_dwim_relative(self, path):
+        raise Exception("die")
+        return super().path_dwim_relative(self._search_path, path)
+
+
 class TemplarEngine:
     """Engine for Ansible's Templar system for lazy vars."""
 
-    def __init__(self, *args, **kwargs):
-        # The DataLoader is used to load and parse YAML or JSON objects
-        # overload for search_path
-        self.dataloader = DataLoader()
+    def __init__(self, *args, search_path="", **kwargs):
+        print(f"INIT searchPath {search_path}")
+        self.dataloader = PathLoader(search_path)
+        print(f"searchPath2 {self.dataloader._search_path}")
 
     def _render_str_to_str(self, instr, data):
         # Instantiate Templar with the data loader and variable data
         templar = NetomTemplar(loader=self.dataloader, variables=data)
 
+        print(f"searchPath {self.dataloader._search_path}")
+        print(instr)
         # Use the templar object to render the template string
         return templar.template(instr)
 
@@ -73,13 +85,16 @@ class Render:
         self.set_search_path(search_path)
 
     def set_search_path(self, search_path):
+        self._search_path = search_path
+
         if self._engine_type == "templar":
-            self.engine = TemplarEngine()
+            self.engine = TemplarEngine(search_path=search_path)
         else:
             self.engine = tmpl.get_engine(self._engine_type)(search_path=search_path)
 
             for name in filters.__all__:
                 self.engine.engine.filters[name] = getattr(filters, name)
+
 
     def _render(self, filename, data, fobj):
         # engine.engine.undefined = IgnoreUndefined
@@ -120,7 +135,7 @@ class TemplarRender(Render):
         super().__init__(*args, **kwargs)
 
     def render_string(self, filename, data):
-        with open(os.path.join(filename), 'r') as file:
+        with open(os.path.join(self._search_path, filename), 'r') as file:
             template_string = file.read()
             return self.render_from_string(template_string, data)
 
