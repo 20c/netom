@@ -17,7 +17,32 @@ __all__ = [
     "line_to_wildcard",
     "make_variable_name",
     "render_template",
+    "render_template_slug",
 ]
+
+
+@pass_context
+def render_template_slug(context, value, slug):
+    """
+    Renders a template from the value.
+
+    Does not get local variables.
+    """
+    template = context.eval_ctx.environment.from_string(value)
+    vars = dict(slug=slug)
+    # print(f"parent {context.parent}")
+    # print(f"VARS {context.vars.items()}")
+    # print(f"ENV {context.get_all()}")
+    # print(f"slug {context.get('slug')}")
+    # print(f"resolve slug {context.resolve('slug')}")
+    # print(f"vars slug {context.vars.get('slug')}")
+    result = template.render({**context, **vars})
+
+    # not sure we need this
+    #    if context.eval_ctx.autoescape:
+    #        result = Markup(result)
+
+    return result
 
 
 @pass_context
@@ -28,9 +53,12 @@ def render_template(context, value):
     Does not get local variables.
     """
     template = context.eval_ctx.environment.from_string(value)
-    #    print(f"parent {context.parent}")
-    #    print(f"ENV {context.get_all()['self_id']}")
-    #    print(f"self-id {context.get('self_id')}")
+    # print(f"parent {context.parent}")
+    # print(f"VARS {context.vars.items()}")
+    # print(f"ENV {context.get_all()}")
+    # print(f"slug {context.get('slug')}")
+    # print(f"resolve slug {context.resolve('slug')}")
+    # print(f"vars slug {context.vars.get('slug')}")
     result = template.render(**context)
 
     # not sure we need this
