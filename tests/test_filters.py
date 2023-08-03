@@ -22,7 +22,7 @@ def test_address_to_wildcard():
     assert address_to_wildcard("192.168.0.0/25") == "192.168.0.0 0.0.0.127"
     assert address_to_wildcard("192.168.0.0/30") == "192.168.0.0 0.0.0.3"
     assert address_to_wildcard("192.168.0.0/31") == "192.168.0.0 0.0.0.1"
-    assert address_to_wildcard("192.168.0.0/32") == "192.168.0.0 0.0.0.0"
+    assert address_to_wildcard("192.168.0.0/32") == "host 192.168.0.0"
 
 def test_line_to_mask():
     assert line_to_mask("ip route 192.168.0.0/4 198.51.100.1")  == "ip route 192.168.0.0 240.0.0.0 198.51.100.1"
@@ -44,4 +44,4 @@ def test_line_to_wildcard():
     assert line_to_wildcard("permit tcp 192.168.0.0/25 any eq 22") == "permit tcp 192.168.0.0 0.0.0.127 any eq 22"
     assert line_to_wildcard("permit tcp 192.168.0.0/30 any eq 22") == "permit tcp 192.168.0.0 0.0.0.3 any eq 22"
     assert line_to_wildcard("permit tcp 192.168.0.0/31 any eq 22") == "permit tcp 192.168.0.0 0.0.0.1 any eq 22"
-    assert line_to_wildcard("permit tcp 192.168.0.0/32 any eq 22") == "permit tcp 192.168.0.0 0.0.0.0 any eq 22"
+    assert line_to_wildcard("permit tcp 192.168.0.0/32 any eq 22") == "permit tcp host 192.168.0.0 any eq 22"

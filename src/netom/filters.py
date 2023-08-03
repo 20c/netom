@@ -115,6 +115,8 @@ def address_to_wildcard(addr):
     https://medium.com/opsops/wildcard-masks-operations-in-python-16acf1c35683
     """
     ipnet4 = ipaddress.ip_network(addr)
+    if ipnet4.prefixlen == 32:
+        return f"host {ipnet4.network_address}"
     wildcard = str(IPv4Address(int(IPv4Address(ipnet4.netmask))^(2**32-1)))
     return f"{ipnet4.network_address} {wildcard}"
 
