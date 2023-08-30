@@ -28,7 +28,7 @@ def render_template_slug(context, value, slug):
 
     Does not get local variables.
     """
-    template = context.eval_ctx.environment.from_string(value)
+    template = context.eval_ctx.environment.from_string(str(value))
     vars = dict(slug=slug)
     # print(f"parent {context.parent}")
     # print(f"VARS {context.vars.items()}")
@@ -52,7 +52,7 @@ def render_template(context, value):
 
     Does not get local variables.
     """
-    template = context.eval_ctx.environment.from_string(value)
+    template = context.eval_ctx.environment.from_string(str(value))
     # print(f"parent {context.parent}")
     # print(f"VARS {context.vars.items()}")
     # print(f"ENV {context.get_all()}")
