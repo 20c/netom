@@ -7,7 +7,8 @@ import tmpl
 from confu import schema
 from pkg_resources import get_distribution
 
-from . import filters
+import netom.filters
+
 from .exception import NetomValidationError
 
 # TODO move out of this namespace
@@ -25,10 +26,8 @@ class NetomTemplar(Templar):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.environment.filters["address_to_mask"] = filters.address_to_mask
-
-        for name in filters.__all__:
-            self.environment.filters[name] = getattr(filters, name)
+        for name in netom.filters.__all__:
+            self.environment.filters[name] = getattr(netom.filters, name)
 
 
 class PathLoader(DataLoader):
@@ -64,7 +63,7 @@ class Render:
     Renders data to defined type.
     """
 
-    def __init__(self, model_version, model_type, search_path=None, engine="jinja2"):
+    def __init__(self, model_version, model_type, search_path=None, engine="jinja2", filters=None):
         """
         Create a render object.
 
@@ -75,7 +74,14 @@ class Render:
 
         self.version = model_version
         self.type = model_type
+        self.filters = {}
         self._engine_type = engine
+
+        for name in netom.filters.__all__:
+            self.filters[name] = getattr(netom.filters, name)
+
+        if filters:
+            self.filters.update(filters)
 
         if not search_path:
             # FIXME use pkg resources
@@ -91,10 +97,7 @@ class Render:
             self.engine = TemplarEngine(search_path=search_path)
         else:
             self.engine = tmpl.get_engine(self._engine_type)(search_path=search_path)
-
-            for name in filters.__all__:
-                self.engine.engine.filters[name] = getattr(filters, name)
-
+            self.engine.engine.filters.update(self.filters)
 
     def _render(self, filename, data, fobj):
         # engine.engine.undefined = IgnoreUndefined
