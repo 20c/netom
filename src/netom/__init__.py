@@ -98,6 +98,7 @@ class Render:
         else:
             self.engine = tmpl.get_engine(self._engine_type)(search_path=search_path)
             self.engine.engine.filters.update(self.filters)
+            self.engine.engine.add_extension('jinja2.ext.loopcontrols')
 
     def _render(self, filename, data, fobj):
         # engine.engine.undefined = IgnoreUndefined
@@ -110,7 +111,7 @@ class Render:
             self._render(filename, data, fobj)
             return fobj.getvalue()
 
-    def render_from_string(self, instr, data):
+    def render_from_string(self, instr: str, data: dict):
         return self.engine._render_str_to_str(instr, data)
 
     def bgp_neighbors(self, data, fobj, validate=True):
