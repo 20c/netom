@@ -12,10 +12,10 @@ classifiers = [
     "Intended Audience :: System Administrators",
     "Intended Audience :: Telecommunications Industry",
     "License :: OSI Approved :: Apache Software License",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Internet",
 ]
@@ -30,11 +30,16 @@ netom = "netom.cli:main"
 
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 jinja2 = ">=3"
 confu = ">=1.7.1"
 munge = ">=1.1.0"
 ansible-core = "^2"
+tmpl = ">=1"
+
+# [tool.poetry.dependencies.tmpl]
+# path = "../tmpl"
+# develop = true
 
 [tool.poetry.dev-dependencies]
 # testing
@@ -47,12 +52,10 @@ tox = ">=3"
 
 # linting
 bandit = ">=1.6.2"
-black = ">=20"
-isort = ">=5.7"
-flake8 = ">=3.8"
 mypy = ">=0.950"
 pre-commit = ">=2.13"
 pyupgrade = ">=2.19"
+ruff = ">=0.1"
 
 # docs
 markdown = "*"
@@ -61,7 +64,6 @@ mkdocs = ">=1.2.3"
 
 # ctl
 ctl = ">=1"
-tmpl = ">=1"
 
 
 [build-system]

@@ -1,10 +1,14 @@
 Unreleased:
-  added: []
+  added:
+  - python to 3.9
+  - ansible Templar templating system
+  - loopcontrol
+  - allow adding filters
   changed: []
   deprecated: []
   fixed: []
   removed:
-  - python 3.7 support
+  - python 3.7, 3.8 support
   security: []
 
 0.2.0:
