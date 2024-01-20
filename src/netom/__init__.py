@@ -1,8 +1,6 @@
 import io
-import ipaddress
 import os
 
-import confu
 import tmpl
 from confu import schema
 from pkg_resources import get_distribution
@@ -63,7 +61,9 @@ class Render:
     Renders data to defined type.
     """
 
-    def __init__(self, model_version, model_type, search_path=None, engine="jinja2", filters=None):
+    def __init__(
+        self, model_version, model_type, search_path=None, engine="jinja2", filters=None
+    ):
         """
         Create a render object.
 
@@ -98,7 +98,7 @@ class Render:
         else:
             self.engine = tmpl.get_engine(self._engine_type)(search_path=search_path)
             self.engine.engine.filters.update(self.filters)
-            self.engine.engine.add_extension('jinja2.ext.loopcontrols')
+            self.engine.engine.add_extension("jinja2.ext.loopcontrols")
 
     def _render(self, filename, data, fobj):
         # engine.engine.undefined = IgnoreUndefined
@@ -133,19 +133,17 @@ class Render:
 
 
 class TemplarRender(Render):
-
     def __init__(self, *args, **kwargs):
         kwargs["engine"] = "templar"
         super().__init__(*args, **kwargs)
 
     def render_string(self, filename, data):
-        with open(os.path.join(self._search_path, filename), 'r') as file:
+        with open(os.path.join(self._search_path, filename)) as file:
             template_string = file.read()
             return self.render_from_string(template_string, data)
 
     def render_from_string(self, instr, data):
         return self.engine._render_str_to_str(instr, data)
-
 
 
 def validate(model, data, strict=True):

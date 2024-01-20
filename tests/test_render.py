@@ -1,26 +1,17 @@
-import os
-
 import netom
-
 from ansible.parsing.dataloader import DataLoader
 from ansible.template import Templar
-
+from jinja2 import Environment
 from netom.filters import (
     address_to_mask,
-    address_to_wildcard,
-    line_to_mask,
-    line_to_wildcard,
 )
 
-from jinja2 import Environment
-
-
 j2env = Environment()
-j2env.filters['address_to_mask'] = address_to_mask
+j2env.filters["address_to_mask"] = address_to_mask
 
 
 class NetomTemplar(Templar):
-    '''A custom Templar class which includes additional jinja2 filters.'''
+    """A custom Templar class which includes additional jinja2 filters."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
