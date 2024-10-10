@@ -83,15 +83,89 @@ def ip_address(value):
     return ipaddress.ip_interface(value).ip
 
 
-# XXX use this
 def ip_interface(value):
     """
-    Returns ip_interface of passed value.
+    Returns ip_interface of passed IP interface.
     """
     return ipaddress.ip_interface(value)
 
+def ip_prefixlen(addr):
+    """
+    Returns the prefix length for passed IP interface.
+    """
+    return ipaddress.ip_interface(addr).prefixlen
 
-# XXX when was interface added?
+def ip_netmask(addr):
+    """
+    Returns a subnet mask for passed IP interface.
+    """
+    return ipaddress.ip_interface(addr).netmask
+
+def ip_hostmask(addr):
+    """
+    Returns a wilcard or hostmask for passed IP interface.
+
+    Example:
+    ip_netmask('10.10.10.5/24')
+    > 0.0.0.255
+    """
+    return ipaddress.ip_interface(addr).hostmask
+
+def ip_network(addr):
+    """
+    Returns a network address for a combination of IP address and subnet mask
+
+    Example:
+    ip_network('10.10.10.5/24')
+    > 10.10.10.0
+    """
+    return ipaddress.ip_network(addr).network
+
+
+def ip_broadcast(addr):
+    """
+    Returns a broadcast address for a combination of IP address and subnet mask
+
+    Example:
+    ip_network('10.10.10.5/24')
+    > 10.10.10.255
+    """
+    return ipaddress.ip_network(addr).broadcast
+
+def ip_network_hosts_size(addr):
+    """
+    Returns the size of the subnet for a combination of IP address and subnet mask
+
+    Example:
+    ip_network_hosts_size('10.10.10.5/24')
+    > 253
+    """
+    return ipaddress.ip_network(addr).size
+
+
+def ip_network_first(addr):
+    """
+    Returns the first usable address in network address for a combination of IP address and subnet mask
+
+    Example:
+    ip_network('10.10.10.5/24')
+    > 10.10.10.1
+    """
+    net = ipaddress.ip_network(addr)
+    return ipaddress.ip_address(net[1]).__str__()
+
+
+def ip_network_last(addr):
+    """
+    Returns the last usable address in network address for a combination of IP address and subnet mask
+
+    Example:
+    ip_network('10.10.10.5/24')
+    > 10.10.10.254
+    """
+    return ipaddress.ip_address(ipaddress.ip_network(addr)[-2]).__str__()
+
+
 def ip_version(value):
     """
     Returns version of passed IP address.

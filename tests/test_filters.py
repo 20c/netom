@@ -3,7 +3,10 @@ from netom.filters import (
     address_to_wildcard,
     line_to_mask,
     line_to_wildcard,
+    ip_network_first,
+    ip_network_last,
 )
+import pytest
 
 
 def test_address_to_mask():
@@ -106,3 +109,19 @@ def test_line_to_wildcard():
         line_to_wildcard("permit tcp 192.168.0.0/32 any eq 22")
         == "permit tcp 192.168.0.0 0.0.0.0 any eq 22"
     )
+
+
+def test_ip_network_first():
+    assert ip_network_first("192.168.0.0/24") == "192.168.0.1"
+    assert ip_network_first("10.0.0.0/8") == "10.0.0.1"
+
+
+def test_ip_network_last():
+    assert ip_network_last("192.168.0.0/24") == "192.168.0.254"
+    assert ip_network_last("10.0.0.0/8") == "10.255.255.254"
+    assert ip_network_last("172.16.0.0/16") == "172.16.255.254"
+    assert ip_network_last("192.168.1.0/30") == "192.168.1.2"
+    # XXX assert ip_network_last("192.168.1.0/31") == "192.168.1.1"
+
+    with pytest.raises(Exception):
+        ip_network_last("192.168.1.0/32")
