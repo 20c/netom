@@ -1,6 +1,5 @@
-import pytest
-
 import netom
+import pytest
 from netom import exception
 from netom.models import BgpNeighbor
 
